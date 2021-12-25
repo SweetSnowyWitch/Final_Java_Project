@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Countries {
     private static ArrayList<Country> countries;
 
-    Countries(String path){
+    Countries(String path) {
         countries = new ArrayList<>();
         try {
             var data = Files.readAllLines(Paths.get(path), Charset.defaultCharset());

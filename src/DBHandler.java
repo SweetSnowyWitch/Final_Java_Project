@@ -1,4 +1,5 @@
 import org.sqlite.JDBC;
+
 import java.sql.*;
 import java.util.*;
 
@@ -12,11 +13,19 @@ public class DBHandler {
 
         return instance;
     }
+
     private Connection connection;
 
     private DBHandler() throws SQLException {
         DriverManager.registerDriver(new JDBC());
         this.connection = DriverManager.getConnection(CON_STR);
+        var stmt = this.connection.createStatement();
+        stmt.executeUpdate("DROP TABLE Countries");
+        stmt.executeUpdate("CREATE TABLE Countries(id INTEGER NOT NULL PRIMARY KEY," +
+                "Country TEXT, Region TEXT, HappinessRank INTEGER, HappinessScore FLOAT, " +
+                "StandardError FLOAT, Economy FLOAT, Family FLOAT, Health FLOAT, Freedom FLOAT, " +
+                "Trust FLOAT, Generosity FLOAT, DystopiaResidual FLOAT)");
+        stmt.close();
     }
 
     public List<Country> getAllCountries() {
